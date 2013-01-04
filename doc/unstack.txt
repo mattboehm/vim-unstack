@@ -1,19 +1,19 @@
-*crashcart.txt* Extract/Open lines from stack traces
+*unstack.txt* Extract/Open lines from stack traces
 
 Author: Matthew Boehm <http://github.com/mattboehm>
 
 ==============================================================================
-INTRODUCTION                                                         *crashcart*
+INTRODUCTION                                                           *unstack*
 
 Feed all or part of a stacktrace into this plugin and it will open a new tab
 with each level of the stacktrace in a new vsplit. This can be useful for
 seeing more context around an exception or to quickly edit offending files.
 
 ==============================================================================
-LIMITATIONS                                              *crashcart-limitations*
+LIMITATIONS                                                *unstack-limitations*
 
 1. Only Python stacktraces are recognized, but this can be extended via the 
-   |crashcart_regexes| setting.
+   |unstack_regexes| setting.
 2. If a stack trace contains relative paths, they must be relative to Vim's
    current working directory.
 3. Signs are not removed after being placed.
@@ -22,29 +22,29 @@ LIMITATIONS                                              *crashcart-limitations*
 4. Stacktraces must contain a file and a line number on the same line.
 
 ==============================================================================
-OPTIONS                                                      *crashcart-options*
+OPTIONS                                                        *unstack-options*
 
-|crashcart_mapkey|    shortcut to launch crashcart default <leader>s
-|crashcart_showsigns| whether or not to show signs on stacktrace lines
-|crashcart_regexes|   regexes for finding files/lines
+|unstack_mapkey|    shortcut to launch unstack default <leader>s
+|unstack_showsigns| whether or not to show signs on stacktrace lines
+|unstack_regexes|   regexes for finding files/lines
 
 ------------------------------------------------------------------------------
-                                                              *crashcart_mapkey*
+                                                                *unstack_mapkey*
 Values: string
 Default: <leader>s
 
 Press this combination with a visual selection (or in normal mode followed by
 a motion) to edit 
 ------------------------------------------------------------------------------
-                                                           *crashcart_showsigns*
+                                                             *unstack_showsigns*
 Values: 0 or 1
 Default: 1
 
-If this is set to 1, crashcart will put a |sign| on lines in the stacktrace.
+If this is set to 1, unstack will put a |sign| on lines in the stacktrace.
 These signs will be visible in any window in the current vim session showing
 that file.
 ------------------------------------------------------------------------------
-                                                             *crashcart_regexes*
+                                                               *unstack_regexes*
 Format: [[regex, filegroup, linegroup]... ]
 
 regex 		should match lines in a stacktrace that contain filepath and
