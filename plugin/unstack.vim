@@ -14,8 +14,8 @@ exe 'vnoremap '.g:unstack_mapkey.' :<c-u>call <SID>StackTrace(visualmode())<cr>'
 
 "Regular expressions for a line of stacktrace. The file path and line number
 "should be surrounded by parentheses so that they are captured as groups
-if (!exists('g:unstack_regexes'))
-  let g:unstack_regexes = [['\v^ *File "([^"]+)", line ([0-9]+).+', '\1', '\2']]
+if (!exists('g:unstack_patterns'))
+  let g:unstack_patterns = [['\v^ *File "([^"]+)", line ([0-9]+).+', '\1', '\2']]
 endif
 
 "Whether or not to show signs on error lines (highlights them red)
@@ -49,16 +49,17 @@ function! s:StackTrace(type)
   let &selection = sel_save
   let @@ = reg_save
 endfunction "}}}
+
 "ExtractFiles(stacktrace) extract files and lines from a stacktrace {{{
 "return [[file1, line1], [file2, line2] ... ] from a stacktrace 
 function! s:ExtractFiles(stacktrace)
-  for [regex, file_subgroup, line_subgroup] in g:unstack_regexes
+  for [regex, file_replacement, line_replacement] in g:unstack_patterns
     let files = []
     for line in split(a:stacktrace, "\n")
-      let fname = substitute(line, regex, file_subgroup, '')
+      let fname = substitute(line, regex, file_replacement, '')
       "if this line has a matching filename
       if (fname != line)
-        let lineno = substitute(line, regex, line_subgroup, '')
+        let lineno = substitute(line, regex, line_replacement, '')
         call add(files, [fname, lineno])
       endif
     endfor
@@ -67,6 +68,7 @@ function! s:ExtractFiles(stacktrace)
     endif
   endfor
 endfunction "}}}
+
 "{{{OpenStackTrace(files) open extracted files in new tab
 "files: [[file1, line1], [file2, line2] ... ] from a stacktrace
 function! s:OpenStackTrace(files)
