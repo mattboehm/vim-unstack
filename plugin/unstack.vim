@@ -79,9 +79,10 @@ function! s:OpenStackTrace(files)
   tabnew
   if (g:unstack_showsigns)
     sign define errline text=>> linehl=Error texthl=Error
-    "unusual number meant to prevent collisions existing signs
-    "TODO randomize so that multiple stacktraces can exist in parallel
-    let signId = 96224
+    "sign ID's should be unique. If you open a stack trace with 5 levels,
+    "you'd have to wait 5 seconds before opening another or risk signs
+    "colliding.
+    let signId = localtime()
   endif
   for fileinfo in a:files
     let filepath = fileinfo[0]
