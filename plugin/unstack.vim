@@ -72,6 +72,10 @@ endfunction "}}}
 "{{{OpenStackTrace(files) open extracted files in new tab
 "files: [[file1, line1], [file2, line2] ... ] from a stacktrace
 function! s:OpenStackTrace(files)
+  "disable redraw when opening files
+  "still redraws when a split occurs but might *slightly* improve performance
+  let lazyredrawSet = &lazyredraw
+  set lazyredraw
   tabnew
   if (g:unstack_showsigns)
     sign define errline text=>> linehl=Error texthl=Error
@@ -96,6 +100,9 @@ function! s:OpenStackTrace(files)
   "after adding the last file, the loop above calls vnew again.
   "delete this last empty vertical split
   exe 'quit'
+  if (!lazyredrawSet)
+    set nolazyredraw
+  endif
 endfunction "}}}
 
 " vim:set foldmethod=marker
