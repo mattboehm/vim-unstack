@@ -23,9 +23,15 @@ Signs
 By default, Unstack uses signs to highlight lines from stack traces in red. There is currently no method to remove these signs. If you want to disable this feature add `set unstack_showsigns=0` to your .vimrc.
 
 
-Customizing Regexes
+Supported Languages
 -------------------
-The `g:unstack_patterns` variable contains a list of patterns to try to match lines against. A pattern is a list of 3 items:
+Currently the following stack traces are supported:
+
+* Python
+
+Customizing Languages
+---------------------
+Stack trace "flavors" can be added or removed by changing the  `g:unstack_patterns` variable. This contains a list of patterns to try to match lines against. A pattern is a list of 3 items:
 
 * A regular expression to test a line against
 * What to replace the match with to get the file
