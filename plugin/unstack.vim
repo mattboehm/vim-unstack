@@ -123,33 +123,26 @@ function! s:RemoveSigns(tabId)
   unlet s:unstack_signs[a:tabId]
 endfunction "}}}
 
+"{{{s:GetOpenTabIds() get unstack id's for current tabs
+function! s:GetOpenTabIds()
+  let curTab = tabpagenr()
+  "determine currently open tabs
+  let openTabIds = []
+  tabdo if exists('t:unstack_tabId') | call add(openTabIds, string(t:unstack_tabId)) | endif
+  "jump back to prev. tab
+  exe "tabnext " . curTab 
+  return openTabIds
+endfunction "}}}
+
 "{{{s:RemoveSignsFromClosedTabs() remove signs that were placed in tabs that are
 "now closed
 function! s:RemoveSignsFromClosedTabs()
-  "this function is triggered on TabEnter but we don't want the function to
-  "recursively trigger itself
-  if !exists('g:unstack_removingSignsFromClosedTabs')
-    let g:unstack_removingSignsFromClosedTabs=1
-    let curTab = tabpagenr()
-    "determine currently open tabs
-    let g:unstack_openTabIds = []
-    tabdo if exists('t:unstack_tabId') | call add(g:unstack_openTabIds, string(t:unstack_tabId)) | endif
-    "jump back to prev. tab
-    exe "tabnext " . curTab 
-    for tabId in keys(s:unstack_signs)
-      if index(g:unstack_openTabIds, tabId) == -1
-        call s:RemoveSigns(tabId)
-      endif
-    endfor
-    "If the current tab has signs that were just removed, sometimes they're
-    "still visible until you switch tabs and switch back
-    tabnext
-    redraw!
-    tabprev
-    redraw!
-    unlet g:unstack_openTabIds
-    unlet g:unstack_removingSignsFromClosedTabs
-  endif
+  let openTabIds = s:GetOpenTabIds()
+  for tabId in keys(s:unstack_signs)
+    if index(openTabIds, tabId) == -1
+      call s:RemoveSigns(tabId)
+    endif
+  endfor
 endfunction "}}}
 
 " vim:set foldmethod=marker

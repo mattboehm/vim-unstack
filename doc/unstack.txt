@@ -16,10 +16,8 @@ LIMITATIONS                                                *unstack-limitations*
    |unstack_patterns| setting.
 2. If a stack trace contains relative paths, they must be relative to Vim's
    current working directory.
-3. Signs are not removed after being placed.
-4. Signs may have conflicting ID's due to 3 or if you try to open multiple
-   stacktraces at once.
-4. Stacktraces must contain a file and a line number on the same line.
+3. Stacktraces must contain a file and a line number on the same line.
+   You can ignore line number, but you can't use it if on a different line.
 
 ==============================================================================
 OPTIONS                                                        *unstack-options*

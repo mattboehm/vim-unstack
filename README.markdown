@@ -3,7 +3,7 @@ unstack.vim
 
 Parse stack traces and open the result in vim splits!
 
-Version 0.1.1
+Version 0.1.2
 
 No backwards compatability is guaranteed at this time and there are still known issues that need to be resolved.
 
@@ -20,7 +20,7 @@ Screenshot
 
 Signs
 -----
-By default, Unstack uses signs to highlight lines from stack traces in red. There is currently no method to remove these signs. If you want to disable this feature add `set unstack_showsigns=0` to your .vimrc.
+By default, Unstack uses signs to highlight lines from stack traces in red. Signs are removed when the tab they were created in is closed. Sometimes a sign will appear to stick around after it's been removed until you switch tabs again. If you want to disable this feature add `set unstack_showsigns=0` to your .vimrc.
 
 
 Supported Languages
