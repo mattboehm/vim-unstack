@@ -4,6 +4,12 @@ if exists('g:loaded_unstack')
   finish
 endif
 let g:loaded_unstack = 1
+let s:unstack_signs = {}
+
+augroup unstack_signClear
+  autocmd!
+  autocmd TabEnter * call s:RemoveSignsFromClosedTabs()
+augroup end
 
 "Settings {{{
 if !exists('g:unstack_mapkey')
@@ -83,6 +89,8 @@ function! s:OpenStackTrace(files)
     "you'd have to wait 5 seconds before opening another or risk signs
     "colliding.
     let signId = localtime()
+    let t:unstack_tabId = signId
+    let s:unstack_signs[t:unstack_tabId] = []
   endif
   for fileinfo in a:files
     let filepath = fileinfo[0]
@@ -93,6 +101,7 @@ function! s:OpenStackTrace(files)
     exe "normal! " . lineno . "z+"
     if (g:unstack_showsigns)
       exe "sign place " . signId . " line=" . lineno . " name=errline buffer=" . bufnr('%')
+      call add(s:unstack_signs[t:unstack_tabId], signId)
       let signId += 1
     endif
     "make a new vertical split for the next file
@@ -103,6 +112,43 @@ function! s:OpenStackTrace(files)
   exe 'quit'
   if (!lazyredrawSet)
     set nolazyredraw
+  endif
+endfunction "}}}
+
+"{{{s:RemoveSigns(tabId) remove signs from the files initially opened in a tab
+function! s:RemoveSigns(tabId)
+  for signId in s:unstack_signs[a:tabId]
+    exe "sign unplace " . signId
+  endfor
+  unlet s:unstack_signs[a:tabId]
+endfunction "}}}
+
+"{{{s:RemoveSignsFromClosedTabs() remove signs that were placed in tabs that are
+"now closed
+function! s:RemoveSignsFromClosedTabs()
+  "this function is triggered on TabEnter but we don't want the function to
+  "recursively trigger itself
+  if !exists('g:unstack_removingSignsFromClosedTabs')
+    let g:unstack_removingSignsFromClosedTabs=1
+    let curTab = tabpagenr()
+    "determine currently open tabs
+    let g:unstack_openTabIds = []
+    tabdo if exists('t:unstack_tabId') | call add(g:unstack_openTabIds, string(t:unstack_tabId)) | endif
+    "jump back to prev. tab
+    exe "tabnext " . curTab 
+    for tabId in keys(s:unstack_signs)
+      if index(g:unstack_openTabIds, tabId) == -1
+        call s:RemoveSigns(tabId)
+      endif
+    endfor
+    "If the current tab has signs that were just removed, sometimes they're
+    "still visible until you switch tabs and switch back
+    tabnext
+    redraw!
+    tabprev
+    redraw!
+    unlet g:unstack_openTabIds
+    unlet g:unstack_removingSignsFromClosedTabs
   endif
 endfunction "}}}
 
