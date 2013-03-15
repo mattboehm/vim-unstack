@@ -12,6 +12,8 @@ Usage
 -----
 Visually select part/all of a stacktrace and hit `<leader>s`. If you want to use a different map key, put `let g:unstack_mapkey=<F10>` (replacing <F10> with the key of your choice.)
 
+If this results in too many vsplits crowding the screen, consider taking a look at the [accordion](https://github.com/mattboehm/vim-accordion) plugin (shameless plug).
+
 
 Screenshot
 ----------
