@@ -12,8 +12,8 @@ seeing more context around an exception or to quickly edit offending files.
 ==============================================================================
 LIMITATIONS                                                *unstack-limitations*
 
-1. Only Python stacktraces are recognized, but this can be extended via the 
-   |unstack_patterns| setting.
+1. Only Python and Ruby stacktraces are recognized, but this can be extended 
+   via the |unstack_patterns| setting.
 2. If a stack trace contains relative paths, they must be relative to Vim's
    current working directory.
 3. Stacktraces must contain a file and a line number on the same line.

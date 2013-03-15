@@ -21,7 +21,7 @@ exe 'vnoremap '.g:unstack_mapkey.' :<c-u>call <SID>StackTrace(visualmode())<cr>'
 "Regular expressions for a line of stacktrace. The file path and line number
 "should be surrounded by parentheses so that they are captured as groups
 if (!exists('g:unstack_patterns'))
-  let g:unstack_patterns = [['\v^ *File "([^"]+)", line ([0-9]+).+', '\1', '\2']]
+  let g:unstack_patterns = [['\v^ *File "([^"]+)", line ([0-9]+).+', '\1', '\2'], ['\v^[ \t]*from ([^:]+):([0-9]+):in `.+', '\1', '\2']]
 endif
 
 "Whether or not to show signs on error lines (highlights them red)

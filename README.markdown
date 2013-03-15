@@ -3,7 +3,7 @@ unstack.vim
 
 Parse stack traces and open the result in vim splits!
 
-Version 0.1.2
+Version 0.1.3
 
 No backwards compatability is guaranteed at this time and there are still known issues that need to be resolved.
 
@@ -28,6 +28,7 @@ Supported Languages
 Currently the following stack traces are supported:
 
 * Python
+* Ruby
 
 Customizing Languages
 ---------------------
