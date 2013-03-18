@@ -9,6 +9,8 @@ Feed all or part of a stacktrace into this plugin and it will open a new tab
 with each level of the stacktrace in a new vsplit. This can be useful for
 seeing more context around an exception or to quickly edit offending files.
 
+Unstack also supports opening lines from the quickfix list.
+
 ==============================================================================
 LIMITATIONS                                                *unstack-limitations*
 

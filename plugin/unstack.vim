@@ -1,22 +1,24 @@
 "TODO add 'quit' function/shortcut that removes marks
 
+"Initialization {{{
 if exists('g:loaded_unstack')
   finish
 endif
+
 let g:loaded_unstack = 1
 let s:unstack_signs = {}
 
 augroup unstack_signClear
   autocmd!
   autocmd TabEnter * call s:RemoveSignsFromClosedTabs()
-augroup end
+augroup end "}}}
 
 "Settings {{{
 if !exists('g:unstack_mapkey')
   let g:unstack_mapkey = '<leader>s'
 endif
-exe 'nnoremap '.g:unstack_mapkey.' :set operatorfunc=<SID>StackTrace<cr>g@'
-exe 'vnoremap '.g:unstack_mapkey.' :<c-u>call <SID>StackTrace(visualmode())<cr>'
+exe 'nnoremap '.g:unstack_mapkey.' :set operatorfunc=<SID>Unstack<cr>g@'
+exe 'vnoremap '.g:unstack_mapkey.' :<c-u>call <SID>Unstack(visualmode())<cr>'
 
 "Regular expressions for a line of stacktrace. The file path and line number
 "should be surrounded by parentheses so that they are captured as groups
@@ -29,36 +31,66 @@ if !exists('g:unstack_showsigns')
   let g:unstack_showsigns = 1
 endif "}}}
 
-"StackTrace(type) called by hotkeys {{{
-function! s:StackTrace(type)
-  let sel_save = &selection
-  let &selection = "inclusive"
-  let reg_save = @@
-
-  if a:type ==# 'V'
-    execute "normal! `<V`>y"
-  elseif a:type ==# 'v'
-    execute "normal! `<v`>y"
-  elseif a:type ==# 'char'
-    execute "normal! `[v`]y"
-  elseif a:type ==# 'line'
-    execute "normal! `[V`]y"
+"Unstack(type) called by hotkeys {{{
+function! s:Unstack(type)
+  if &buftype == "quickfix"
+    let fileList = s:ExtractFilesFromQuickfix(a:type)
   else
-    let &selection = sel_save
-    let @@ = reg_save
-    return
+    let fileList = s:ExtractFiles(a:type)
   endif
-
-  let files = s:ExtractFiles(@@)
-  call s:OpenStackTrace(files)
-
-  let &selection = sel_save
-  let @@ = reg_save
+  call s:OpenStackTrace(fileList)
 endfunction "}}}
 
-"ExtractFiles(stacktrace) extract files and lines from a stacktrace {{{
+"ExtractFilesFromQuickfix(type) extract files from selected text or normal cmd range {{{
+function! s:ExtractFilesFromQuickfix(type)
+  if a:type ==# "v" || a:type ==# "V"
+    let marks = ["'<", "'>"]
+  else
+    let marks = ["'[", "']"]
+  endif
+  let startLine = line(marks[0]) - 1 "lines are 0-indexed in quickfix list
+  let stopLine = line(marks[1]) - 1 "lines are 0-indexed in quickfix list
+  let fileList = []
+  while startLine <= stopLine
+    let qfline = getqflist()[startLine]
+    let fname = bufname(qfline["bufnr"])
+    let lineno = qfline["lnum"]
+    call add(fileList, [fname, lineno])
+    let startLine = startLine + 1
+  endwhile
+  return fileList
+endfunction "}}}
+
+"ExtractFiles(type) extract files from selected text or normal cmd range {{{
+function! s:ExtractFiles(type)
+    let sel_save = &selection
+    let &selection = "inclusive"
+    let reg_save = @@
+  
+    if a:type ==# 'V'
+      execute "normal! `<V`>y"
+    elseif a:type ==# 'v'
+      execute "normal! `<v`>y"
+    elseif a:type ==# 'char'
+      execute "normal! `[v`]y"
+    elseif a:type ==# 'line'
+      execute "normal! `[V`]y"
+    else
+      let &selection = sel_save
+      let @@ = reg_save
+      return
+    endif
+  
+    let fileList = s:ExtractFilesFromText(@@)
+    let &selection = sel_save
+    let @@ = reg_save
+
+    return fileList
+endfunction "}}}
+
+"ExtractFilesFromText(stacktrace) extract files and lines from a stacktrace {{{
 "return [[file1, line1], [file2, line2] ... ] from a stacktrace 
-function! s:ExtractFiles(stacktrace)
+function! s:ExtractFilesFromText(stacktrace)
   for [regex, file_replacement, line_replacement] in g:unstack_patterns
     let files = []
     for line in split(a:stacktrace, "\n")
