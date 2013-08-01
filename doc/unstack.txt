@@ -15,18 +15,16 @@ Unstack also supports opening lines from the quickfix list.
 LIMITATIONS                                                *unstack-limitations*
 
 1. Only Python and Ruby stacktraces are recognized, but this can be extended 
-   via the |unstack_patterns| setting.
+   via the |unstack_extractors| setting.
 2. If a stack trace contains relative paths, they must be relative to Vim's
    current working directory.
-3. Stacktraces must contain a file and a line number on the same line.
-   You can ignore line number, but you can't use it if on a different line.
 
 ==============================================================================
 OPTIONS                                                        *unstack-options*
 
-|unstack_mapkey|    shortcut to launch unstack default <leader>s
-|unstack_showsigns| whether or not to show signs on stacktrace lines
-|unstack_patterns|  regexes for finding files/lines
+|unstack_mapkey|      shortcut to launch unstack default <leader>s
+|unstack_showsigns|   whether or not to show signs on stacktrace lines
+|unstack_extractors|  regexes for finding files/lines
 
 ------------------------------------------------------------------------------
                                                                 *unstack_mapkey*
@@ -44,15 +42,64 @@ If this is set to 1, unstack will put a |sign| on lines in the stacktrace.
 These signs will be visible in any window in the current vim session showing
 that file.
 ------------------------------------------------------------------------------
-                                                              *unstack_patterns*
-Format: [[regex, filematch, linematch]... ]
+                                                            *unstack_extractors*
+Format: [extractor1, extractor2... ]
 
-regex 		should match lines in a stacktrace that contain filepath and
-		line number. Filepath and line number should be captured in 
-		groups (parens) 
-filematch	what to replace the line with to get the file
-linematch	what to replace the line with to get the line
+This is the list of |unstack-extractors| that will be evaluated in order to
+extract a stack trace from the selected block of text. Setting this list wipes
+out any default extractors. If you want to keep the defaults but add an
+extractor to the list:
+* get the defaults by calling unstack#extractors#GetDefaults()
+* add your extractors to the defaults
+* set g:unstack_extractors to the combined list
 
-Setting this option will overwrite the default rather than adding to it.
+==============================================================================
+EXTRACTORS                                                  *unstack-extractors*
+
+Extractors are dicts with an extract method that takes in text and returns a 
+stack trace in the form [[filea, linea], [fileb, lineb]... ] by writing your
+own extractors, you can extend Unstack to handle parse stack traces with new
+formats!
+
+If your extractor does not find any files, it should return an empty list
+If you can't extract line numbers, just use 0 for all line numbers
+
+To make an extractor, do something like this:
+
+let my_extractor = {}
+function my_extractor.extract(text) dict
+  "convert text to a "stack" or return empty list if text format invalid
+endfunction
+
+
+------------------------------------------------------------------------------
+REGEX EXTRACTORS             *unstack#extractors#regex* *unstack-regex-extractors*
+
+If you want to write an extractor for a format where file path and line number
+can be extracted with regular expressions, there's a built-in factory to help
+you.
+
+For instance, in python, stack traces look like this:
+
+  File "foo.py", line 10, in my_function
+    divide(1, 0)
+  File "math.py", line 6, in divide
+    return  a / b
+
+First we want to form a regex that only matches valid lines with files:
+        '\v^ *File "([^"]+)", line ([0-9]+).+'
+
+Replacing this with the thing in the first perens (\1) yields the file path.
+you can test this by putting your cursor on the first line of the stack trace
+and running:
+        :s/'\v^ *File "([^"]+)", line ([0-9]+).+'/\1/
+
+running this should yield foo.py
+
+repeating the process with \2 should yield the line number (10)
+
+We now have all the necessary pieces. We can make our extractor by calling:
+
+unstack#extractors#Regex('\v^ *File "([^"]+)", line ([0-9]+).+', '\1', '\2'),
 
  vim:tw=78:et:ft=help:norl:

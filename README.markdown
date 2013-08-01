@@ -3,10 +3,17 @@ unstack.vim
 
 Parse stack traces or quickfix entries and open the result in vim splits!
 
-Version 0.2.0
+Go from this:
+
+<img src="http://i.imgur.com/DgXSAkq.png" width="800"/>
+
+To this!
+
+<img src="http://i.imgur.com/Q31wohX.png" width="800"/>
+
+Version 0.3.0
 
 No backwards compatability is guaranteed at this time.
-
 
 Usage
 -----
@@ -14,16 +21,9 @@ Visually select part/all of a stacktrace and hit `<leader>s`. If you want to use
 
 If this results in too many vsplits crowding the screen, consider taking a look at the [accordion](https://github.com/mattboehm/vim-accordion) plugin (shameless plug).
 
-
-Screenshot
-----------
-<img src="http://i.imgur.com/iQdg3.png" width="800"/>
-
-
 Signs
 -----
 By default, Unstack uses signs to highlight lines from stack traces in red. Signs are removed when the tab they were created in is closed. Sometimes a sign will appear to stick around after it's been removed until you switch tabs again. If you want to disable this feature add `set unstack_showsigns=0` to your .vimrc.
-
 
 Supported Languages
 -------------------
@@ -34,17 +34,9 @@ Currently the following stack traces are supported:
 
 Customizing Languages
 ---------------------
-Stack trace "flavors" can be added or removed by changing the  `g:unstack_patterns` variable. This contains a list of patterns to try to match lines against. A pattern is a list of 3 items:
+Unstack can easily be extended to support additional stack trace formats. Check out `:help unstack-extractors` and `:help unstack-regex-extractors` for more information.
 
-* A regular expression to test a line against
-* What to replace the match with to get the file
-* What to replace the match with to get the line number
-
-Let's look at a pattern to match python stack traces:
-
-`['\v^ *File "([^"]+)", line ([0-9]+).+', '\1', '\2']`
-
-If a line matches the pattern, unstack will determine the file by replacing the matching line with `'\1'` which refers to the text between the first set of parentheses.
+Feel free to submit pull requests or open issues for other stack trace languages.
 
 License
 -------

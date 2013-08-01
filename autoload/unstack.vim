@@ -8,18 +8,27 @@ augroup unstack_sign_clear
 augroup end 
 "}}}
 
-"unstack#Unstack(type) called by hotkeys {{{
-function! unstack#Unstack(type)
-  if &buftype == "quickfix"
-    let fileList = unstack#ExtractFilesFromQuickfix(a:type)
-  else
-    let fileList = unstack#ExtractFiles(a:type)
-  endif
-  call unstack#OpenStackTrace(fileList)
+"unstack#Unstack(selection_type) called by hotkeys {{{
+function! unstack#Unstack(selection_type)
+  let stack = unstack#ExtractFiles(a:selection_type)
+  call unstack#OpenStackTrace(stack)
 endfunction
 "}}}
 
-"unstack#ExtractFilesFromQuickfix(type) extract files from selected text or normal cmd range {{{
+"Extraction {{{
+"unstack#ExtractFiles(selection_type) extract files and line numbers {{{
+function! unstack#ExtractFiles(selection_type)
+	if &buftype == "quickfix"
+let fileList = unstack#ExtractFilesFromQuickfix(a:selection_type)
+	else
+	let text = unstack#GetSelectedText(a:selection_type)
+let fileList = unstack#ExtractFilesFromText(text)
+	endif
+	return fileList
+	endfunction
+	"}}}
+
+	"unstack#ExtractFilesFromQuickfix(type) extract files from selected text or normal cmd range {{{
 function! unstack#ExtractFilesFromQuickfix(type)
   if a:type ==# "v" || a:type ==# "V"
     let marks = ["'<", "'>"]
@@ -40,54 +49,47 @@ function! unstack#ExtractFilesFromQuickfix(type)
 endfunction
 "}}}
 
-"unstack#ExtractFiles(type) extract files from selected text or normal cmd range {{{
-function! unstack#ExtractFiles(type)
+"unstack#GetSelectedText(selection_type) extract selected text {{{
+function! unstack#GetSelectedText(selection_type)
     let sel_save = &selection
     let &selection = "inclusive"
     let reg_save = @@
   
-    if a:type ==# 'V'
+    if a:selection_type ==# 'V'
       execute "normal! `<V`>y"
-    elseif a:type ==# 'v'
+    elseif a:selection_type ==# 'v'
       execute "normal! `<v`>y"
-    elseif a:type ==# 'char'
+    elseif a:selection_type ==# 'char'
       execute "normal! `[v`]y"
-    elseif a:type ==# 'line'
+    elseif a:selection_type ==# 'line'
       execute "normal! `[V`]y"
     else
       let &selection = sel_save
       let @@ = reg_save
-      return
+      return ""
     endif
-  
-    let fileList = unstack#ExtractFilesFromText(@@)
+
+    let selected_text = @@
     let &selection = sel_save
     let @@ = reg_save
-
-    return fileList
+    return selected_text
 endfunction
 "}}}
 
 "unstack#ExtractFilesFromText(stacktrace) extract files and lines from a stacktrace {{{
 "return [[file1, line1], [file2, line2] ... ] from a stacktrace 
-function! unstack#ExtractFilesFromText(stacktrace)
-  for [regex, file_replacement, line_replacement] in g:unstack_patterns
-    let files = []
-    for line in split(a:stacktrace, "\n")
-      let fname = substitute(line, regex, file_replacement, '')
-      "if this line has a matching filename
-      if (fname != line)
-        let lineno = substitute(line, regex, line_replacement, '')
-        call add(files, [fname, lineno])
-      endif
-    endfor
-    if(!empty(files))
-      return files
+function! unstack#ExtractFilesFromText(text)
+  for extractor in g:unstack_extractors
+    let stack = extractor.extract(a:text)
+    if(!empty(stack))
+      return stack
     endif
   endfor
 endfunction
 "}}}
+"}}}
 
+"Opening {{{
 "unstack#OpenStackTrace(files) open extracted files in new tab {{{
 "files: [[file1, line1], [file2, line2] ... ] from a stacktrace
 function! unstack#OpenStackTrace(files)
@@ -161,5 +163,6 @@ function! unstack#RemoveSignsFromClosedTabs()
   endfor
 endfunction
 "}}}
+"}}}
 
-" vim:set foldmethod=marker
+" vim:set foldmethod=marker foldmarker={{{,}}}
