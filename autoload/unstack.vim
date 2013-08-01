@@ -1,5 +1,7 @@
 "Initialization {{{
-let s:unstack_signs = {}
+if !exists("s:unstack_signs")
+  let s:unstack_signs = {}
+endif
 augroup unstack_sign_clear
   autocmd!
   autocmd TabEnter * call unstack#RemoveSignsFromClosedTabs()

@@ -16,4 +16,4 @@ if !exists('g:unstack_showsigns')
   let g:unstack_showsigns = 1
 endif "}}}
 
-" vim:foldmethod=marker:foldmarker={{{,}}}:
+" vim:foldmethod=marker:foldmarker={{{,}}}
