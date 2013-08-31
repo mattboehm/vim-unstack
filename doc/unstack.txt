@@ -100,6 +100,12 @@ repeating the process with \2 should yield the line number (10)
 
 We now have all the necessary pieces. We can make our extractor by calling:
 
-unstack#extractors#Regex('\v^ *File "([^"]+)", line ([0-9]+).+', '\1', '\2'),
+unstack#extractors#Regex('\v^ *File "([^"]+)", line ([0-9]+).+', '\1', '\2')
+
+To use this extractor, you'd do one of the following:
+"Use only this extractor
+let g:unstack_extractors = [unstack#extractors#Regex('\v^ *File "([^"]+)", line ([0-9]+).+', '\1', '\2')]
+"Add this extractor to the list of defaults
+let g:unstack_extractors = unstack#extractors#GetDefaults() + [unstack#extractors#Regex('\v^ *File "([^"]+)", line ([0-9]+).+', '\1', '\2')]
 
  vim:tw=78:et:ft=help:norl:
