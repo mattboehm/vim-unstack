@@ -1,3 +1,8 @@
+if exists('g:loaded_unstack')
+  finish
+endif
+let g:loaded_unstack = 1
+
 "Settings {{{
 if !exists('g:unstack_mapkey')
   let g:unstack_mapkey = '<leader>s'
