@@ -1,4 +1,4 @@
-"Initialization {{{
+"Initialization: {{{
 if !exists("s:unstack_signs")
   let s:unstack_signs = {}
 endif
@@ -7,15 +7,13 @@ augroup unstack_sign_clear
   autocmd TabEnter * call unstack#RemoveSignsFromClosedTabs()
 augroup end 
 "}}}
-
 "unstack#Unstack(selection_type) called by hotkeys {{{
 function! unstack#Unstack(selection_type)
   let stack = unstack#ExtractFiles(a:selection_type)
   call unstack#OpenStackTrace(stack)
 endfunction
 "}}}
-
-"Extraction {{{
+"Extraction:
 "unstack#ExtractFiles(selection_type) extract files and line numbers {{{
 function! unstack#ExtractFiles(selection_type)
 	if &buftype == "quickfix"
@@ -27,7 +25,6 @@ let fileList = unstack#ExtractFilesFromText(text)
 	return fileList
 	endfunction
 	"}}}
-
 	"unstack#ExtractFilesFromQuickfix(type) extract files from selected text or normal cmd range {{{
 function! unstack#ExtractFilesFromQuickfix(type)
   if a:type ==# "v" || a:type ==# "V"
@@ -48,7 +45,6 @@ function! unstack#ExtractFilesFromQuickfix(type)
   return fileList
 endfunction
 "}}}
-
 "unstack#GetSelectedText(selection_type) extract selected text {{{
 function! unstack#GetSelectedText(selection_type)
     let sel_save = &selection
@@ -75,7 +71,6 @@ function! unstack#GetSelectedText(selection_type)
     return selected_text
 endfunction
 "}}}
-
 "unstack#ExtractFilesFromText(stacktrace) extract files and lines from a stacktrace {{{
 "return [[file1, line1], [file2, line2] ... ] from a stacktrace 
 function! unstack#ExtractFilesFromText(text)
@@ -87,9 +82,7 @@ function! unstack#ExtractFilesFromText(text)
   endfor
 endfunction
 "}}}
-"}}}
-
-"Opening {{{
+"Opening:
 "unstack#OpenStackTrace(files) open extracted files in new tab {{{
 "files: [[file1, line1], [file2, line2] ... ] from a stacktrace
 function! unstack#OpenStackTrace(files)
@@ -130,7 +123,6 @@ function! unstack#OpenStackTrace(files)
   endif
 endfunction
 "}}}
-
 "unstack#GetOpenTabIds() get unstack id's for current tabs {{{
 function! unstack#GetOpenTabIds()
   let curTab = tabpagenr()
@@ -142,7 +134,6 @@ function! unstack#GetOpenTabIds()
   return openTabIds
 endfunction
 "}}}
-
 "unstack#RemoveSigns(tabId) remove signs from the files initially opened in a tab {{{
 function! unstack#RemoveSigns(tabId)
   for signId in s:unstack_signs[a:tabId]
@@ -151,7 +142,6 @@ function! unstack#RemoveSigns(tabId)
   unlet s:unstack_signs[a:tabId]
 endfunction
 "}}}
-
 "unstack#RemoveSignsFromClosedTabs() remove signs that were placed in tabs that are {{{
 "now closed
 function! unstack#RemoveSignsFromClosedTabs()
@@ -163,6 +153,4 @@ function! unstack#RemoveSignsFromClosedTabs()
   endfor
 endfunction
 "}}}
-"}}}
-
 " vim: et sw=2 sts=2 foldmethod=marker foldmarker={{{,}}}
