@@ -32,4 +32,4 @@ function! unstack#extractors#GetDefaults()
   return extractors
 endfunction
 
-" vim:set foldmethod=marker
+" vim: et sw=2 sts=2 foldmethod=marker foldmarker={{{,}}}
