@@ -165,4 +165,4 @@ endfunction
 "}}}
 "}}}
 
-" vim:set foldmethod=marker foldmarker={{{,}}}
+" vim: et sw=2 sts=2 foldmethod=marker foldmarker={{{,}}}
