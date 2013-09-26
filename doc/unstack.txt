@@ -1,9 +1,25 @@
 *unstack.txt* Extract/Open lines from stack traces
+*unstack*
 
 Author: Matthew Boehm <http://github.com/mattboehm>
 
 ==============================================================================
-INTRODUCTION                                                           *unstack*
+CONTENTS                                         *unstack-contents*
+
+  ╓ Introduction ─────────────────────────────── |unstack-intro|
+  ║                                                                           
+  ╠ Options ──────────────────────────────────── |unstack-options|
+  ║  ├ mapkey................................... |unstack_mapkey|
+  ║  ├ showsigns................................ |unstack_showsigns|
+  ║  └ extractors............................... |unstack_extractors|
+  ║                                                                           
+  ╠ Extractors ───────────────────────────────── |unstack-extractors|
+  ║  └ Regex Extractors......................... |unstack-regex-extractors|
+  ║                                                                           
+  ╙ Limitations ──────────────────────────────── |unstack-limitations|
+
+==============================================================================
+INTRODUCTION                                                     *unstack-intro*
 
 Feed all or part of a stacktrace into this plugin and it will open a new tab
 with each level of the stacktrace in a new vsplit. This can be useful for
