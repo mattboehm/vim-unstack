@@ -35,22 +35,19 @@ OPTIONS                                          *unstack-options*
 |unstack_extractors|  regexes for finding files/lines
 
 ------------------------------------------------------------------------------
-                                                 *unstack_mapkey*
-Values: string
-Default: <leader>s
+let g:unstack_mapkey="<leader>s"                 *unstack_mapkey*
 
 Press this combination with a visual selection (or in normal mode followed by
 a motion) to edit 
 ------------------------------------------------------------------------------
-                                                 *unstack_showsigns*
-Values: 0 or 1
-Default: 1
+let g:unstack_showsigns=1                        *unstack_showsigns*
 
 If this is set to 1, unstack will put a |sign| on lines in the stacktrace.
 These signs will be visible in any window in the current vim session showing
-that file.
+that file. Set to 0 to disable this.
 ------------------------------------------------------------------------------
                                                  *unstack_extractors*
+let g:unstack_extractors=unstack#extractors#GetDefaults()
 Format: [extractor1, extractor2... ]
 
 This is the list of |unstack-extractors| that will be evaluated in order to
