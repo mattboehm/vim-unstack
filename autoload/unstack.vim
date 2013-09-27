@@ -120,10 +120,9 @@ function! unstack#OpenStackTrace(files)
       call add(s:unstack_signs[t:unstack_tabId], signId)
       let signId += 1
     endif
-    "make a new vertical split for the next file
-    botright vnew
+    call unstack#SplitWindow()
   endfor
-  "after adding the last file, the loop above calls vnew again.
+  "after adding the last file, the loop splits again.
   "delete this last empty vertical split
   quit
   if (!lazyredrawSet)
@@ -161,6 +160,27 @@ function! unstack#RemoveSignsFromClosedTabs()
       call unstack#RemoveSigns(tabId)
     endif
   endfor
+endfunction
+"}}}
+"unstack#GetLayout() returns layout setting ("portrait"/"landscape") {{{
+function! unstack#GetLayout()
+  let layout = get(g:, "unstack_layout", "landscape")
+  if layout == "landscape" || layout == "portrait"
+    return layout
+  else
+    throw "g:unstack_layout must be portrait or landscape"
+  endif
+endfunction
+"}}}
+"unstack#SplitWindow() split window horizontally/vertically based on layout{{{
+function! unstack#SplitWindow()
+  let layout = unstack#GetLayout()
+  if layout == "landscape"
+    let split_cmd = "vnew"
+  else
+    let split_cmd = "new"
+  endif
+  execute "botright" split_cmd
 endfunction
 "}}}
 " vim: et sw=2 sts=2 foldmethod=marker foldmarker={{{,}}}

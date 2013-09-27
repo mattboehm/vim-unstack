@@ -15,6 +15,11 @@ if (!exists('g:unstack_extractors'))
   let g:unstack_extractors = unstack#extractors#GetDefaults()
 endif
 
+"Either landscape (vsplits) or portrait (splits)
+if (!exists('g:unstack_layout'))
+  let g:unstack_layout = "landscape"
+endif
+
 "Whether or not to show signs on error lines (highlights them red)
 if !exists('g:unstack_showsigns')
   let g:unstack_showsigns = 1

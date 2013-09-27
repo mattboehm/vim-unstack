@@ -25,6 +25,12 @@ Signs
 -----
 By default, Unstack uses signs to highlight lines from stack traces in red. Signs are removed when the tab they were created in is closed. Sometimes a sign will appear to stick around after it's been removed until you switch tabs again. If you want to disable this feature add `set unstack_showsigns=0` to your .vimrc.
 
+Portrait Layout
+---------------
+If you want the levels of the stack to open in hsplits (top to bottom instead of left to right), add the following to your .vimrc:
+
+    let g:unstack_layout = "portrait"
+
 Supported Languages
 -------------------
 Currently the following stack traces are supported:
