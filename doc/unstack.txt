@@ -124,7 +124,7 @@ let g:unstack_extractors = unstack#extractors#GetDefaults() + [unstack#extractor
 ==============================================================================
 LIMITATIONS                                      *unstack-limitations*
 
-1. Only Python, Ruby, and C#, and Perl stacktraces are recognized, but this can be extended 
+1. Only Python, Ruby, and C#, Perl and Go stacktraces are recognized, but this can be extended 
    via the |unstack_extractors| setting.
 2. If a stack trace contains relative paths, they must be relative to Vim's
    current working directory.

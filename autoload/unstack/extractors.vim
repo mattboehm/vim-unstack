@@ -31,6 +31,8 @@ function! unstack#extractors#GetDefaults()
   call add(extractors, unstack#extractors#Regex('\v^[ \t]*at .*\(.*\) in (.+):line ([0-9]+) *$', '\1', '\2'))
   "Perl
   call add(extractors, unstack#extractors#Regex('\v^%(Trace begun|.+ called) at (.+) line (\d+)$', '\1', '\2'))
+  " Go
+  call add(extractors, unstack#extractors#Regex('\v^[ \t]*(.+):(\d+) \+0x\x+$', '\1', '\2'))
   return extractors
 endfunction
 
