@@ -13,6 +13,7 @@ CONTENTS                                         *unstack-contents*
   ║  ├ showsigns................................ |unstack_showsigns|
   ║  ├ layout................................... |unstack_layout|
   ║  ├ populate_quickfix........................ |unstack_populate_quickfix|
+  ║  ├ open_tab................................. |unstack_open_tab|
   ║  └ extractors............................... |unstack_extractors|
   ║                                                                           
   ╠ Extractors ───────────────────────────────── |unstack-extractors|
@@ -57,6 +58,13 @@ Determines how to layout windows when opening a stack trace
 let g:unstack_populate_quickfix=0                *unstack_populate_quickfix*
 
 If true, puts lines from stack trace in quickfix list
+------------------------------------------------------------------------------
+let g:unstack_open_tab=1                         *unstack_open_tab*
+
+If true, opens the stack trace in vsplits in a new tab
+
+This is the default behavior, and should remain true unless you only want
+unstack to populate the quickfix via |unstack_populate_quickfix|.
 ------------------------------------------------------------------------------
                                                  *unstack_extractors*
 let g:unstack_extractors=unstack#extractors#GetDefaults()

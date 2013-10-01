@@ -15,8 +15,14 @@ if (!exists('g:unstack_extractors'))
   let g:unstack_extractors = unstack#extractors#GetDefaults()
 endif
 
+"populate quickfix with stack
 if (!exists('g:unstack_populate_quickfix'))
   let g:unstack_populate_quickfix = 0
+endif
+
+"open stack in vsplits in a new tab
+if (!exists('g:unstack_open_tab'))
+  let g:unstack_open_tab = 1
 endif
 
 "Either landscape (vsplits) or portrait (splits)

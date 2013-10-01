@@ -15,7 +15,9 @@ function! unstack#Unstack(selection_type)
   if g:unstack_populate_quickfix
     call unstack#PopulateQuickfix(stack)
   endif
-  call unstack#OpenStackTrace(stack)
+  if g:unstack_open_tab
+    call unstack#OpenStackTrace(stack)
+  endif
 endfunction
 "}}}
 "Extraction:
