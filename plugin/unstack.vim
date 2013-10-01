@@ -15,6 +15,10 @@ if (!exists('g:unstack_extractors'))
   let g:unstack_extractors = unstack#extractors#GetDefaults()
 endif
 
+if (!exists('g:unstack_populate_quickfix'))
+  let g:unstack_populate_quickfix = 0
+endif
+
 "Either landscape (vsplits) or portrait (splits)
 if (!exists('g:unstack_layout'))
   let g:unstack_layout = "landscape"

@@ -12,6 +12,9 @@ augroup end
 "unstack#Unstack(selection_type) called by hotkeys {{{
 function! unstack#Unstack(selection_type)
   let stack = unstack#ExtractFiles(a:selection_type)
+  if g:unstack_populate_quickfix
+    call unstack#PopulateQuickfix(stack)
+  endif
   call unstack#OpenStackTrace(stack)
 endfunction
 "}}}
@@ -92,6 +95,15 @@ function! unstack#ExtractFilesFromText(text)
 endfunction
 "}}}
 "Opening:
+"unstack#PopulateQuickfix(stack) set quickfix list to extracted files{{{
+function! unstack#PopulateQuickfix(stack)
+  let qflist = []
+  for [filepath, lineno] in a:stack
+    call add(qflist, {"filename": filepath, "lnum": lineno})
+  endfor
+  call setqflist(qflist)
+endfunction
+"}}}
 "unstack#OpenStackTrace(files) open extracted files in new tab {{{
 "files: [[file1, line1], [file2, line2] ... ] from a stacktrace
 function! unstack#OpenStackTrace(files)

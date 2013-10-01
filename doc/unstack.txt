@@ -12,6 +12,7 @@ CONTENTS                                         *unstack-contents*
   ║  ├ mapkey................................... |unstack_mapkey|
   ║  ├ showsigns................................ |unstack_showsigns|
   ║  ├ layout................................... |unstack_layout|
+  ║  ├ populate_quickfix........................ |unstack_populate_quickfix|
   ║  └ extractors............................... |unstack_extractors|
   ║                                                                           
   ╠ Extractors ───────────────────────────────── |unstack-extractors|
@@ -52,6 +53,10 @@ let g:unstack_layout="landscape"                 *unstack_layout*
 Determines how to layout windows when opening a stack trace
 * "landscape": open vsplits
 * "portrait": open hsplits
+------------------------------------------------------------------------------
+let g:unstack_populate_quickfix=1                *unstack_populate_quickfix*
+
+If true, puts lines from stack trace in quickfix list
 ------------------------------------------------------------------------------
                                                  *unstack_extractors*
 let g:unstack_extractors=unstack#extractors#GetDefaults()
