@@ -11,7 +11,7 @@ To this!
 
 <img src="http://i.imgur.com/Q31wohX.png" width="800"/>
 
-Version 0.3.0
+Version 0.3.3
 
 No backwards compatability is guaranteed at this time.
 
