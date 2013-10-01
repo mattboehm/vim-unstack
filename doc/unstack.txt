@@ -54,7 +54,7 @@ Determines how to layout windows when opening a stack trace
 * "landscape": open vsplits
 * "portrait": open hsplits
 ------------------------------------------------------------------------------
-let g:unstack_populate_quickfix=1                *unstack_populate_quickfix*
+let g:unstack_populate_quickfix=0                *unstack_populate_quickfix*
 
 If true, puts lines from stack trace in quickfix list
 ------------------------------------------------------------------------------
