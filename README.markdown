@@ -53,3 +53,7 @@ License
 -------
 Copyright (c) Matthew Boehm.  Distributed under the same terms as Vim itself.
 See `:help license`.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mattboehm/vim-unstack/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
