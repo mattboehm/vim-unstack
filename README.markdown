@@ -40,6 +40,7 @@ Currently the following stack traces are supported:
 * C#
 * Perl
 * Go
+* Node.js
 
 Is there another language you'd like supported? Open an issue with some sample stack traces or read on to learn how to add custom languages (pull requests welcome).
 

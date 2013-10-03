@@ -33,6 +33,8 @@ function! unstack#extractors#GetDefaults()
   call add(extractors, unstack#extractors#Regex('\v^%(Trace begun|.+ called) at (.+) line (\d+)$', '\1', '\2'))
   " Go
   call add(extractors, unstack#extractors#Regex('\v^[ \t]*(.+):(\d+) \+0x\x+$', '\1', '\2'))
+  " Node.js
+  call add(extractors, unstack#extractors#Regex('\v^ +at .+\((.+):(\d+):\d+\)$', '\1', '\2'))
   return extractors
 endfunction
 
