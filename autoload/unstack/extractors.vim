@@ -35,6 +35,8 @@ function! unstack#extractors#GetDefaults()
   call add(extractors, unstack#extractors#Regex('\v^[ \t]*(.+):(\d+) \+0x\x+$', '\1', '\2'))
   " Node.js
   call add(extractors, unstack#extractors#Regex('\v^ +at .+\((.+):(\d+):\d+\)$', '\1', '\2'))
+  " Erlang R15+
+  call add(extractors, unstack#extractors#Regex('\v^.+\[\{file,"([^"]+)"\},\{line,([0-9]+)\}\]\}.*$', '\1', '\2'))
   return extractors
 endfunction
 
