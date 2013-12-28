@@ -11,7 +11,7 @@ To this!
 
 <img src="http://i.imgur.com/Q31wohX.png" width="800"/>
 
-Version 0.3.4
+Version 0.3.5
 
 No backwards compatability is guaranteed at this time.
 
@@ -46,7 +46,7 @@ Is there another language you'd like supported? Open an issue with some sample s
 
 Customizing Languages
 ---------------------
-Unstack can easily be extended to support additional stack trace formats. Check out `:help unstack-extractors` and `:help unstack-regex-extractors` for more information.
+Unstack can easily be extended to support additional stack trace formats. Check out `:help unstack_extractors` and `:help unstack_regex_extractors` for more information.
 
 Feel free to submit pull requests or open issues for other stack trace languages.
 

@@ -4,11 +4,11 @@
 Author: Matthew Boehm <http://github.com/mattboehm>
 
 ==============================================================================
-CONTENTS                                         *unstack-contents*
+CONTENTS                                         *unstack_contents*
 
-  ╓ Introduction ─────────────────────────────── |unstack-intro|
+  ╓ Introduction ─────────────────────────────── |unstack_intro|
   ║                                                                           
-  ╠ Options ──────────────────────────────────── |unstack-options|
+  ╠ Options ──────────────────────────────────── |unstack_options|
   ║  ├ mapkey................................... |unstack_mapkey|
   ║  ├ showsigns................................ |unstack_showsigns|
   ║  ├ layout................................... |unstack_layout|
@@ -16,13 +16,13 @@ CONTENTS                                         *unstack-contents*
   ║  ├ open_tab................................. |unstack_open_tab|
   ║  └ extractors............................... |unstack_extractors|
   ║                                                                           
-  ╠ Extractors ───────────────────────────────── |unstack-extractors|
-  ║  └ Regex Extractors......................... |unstack-regex-extractors|
+  ╠ Extractors ───────────────────────────────── |unstack_extractors|
+  ║  └ Regex Extractors......................... |unstack_regex_extractors|
   ║                                                                           
-  ╙ Limitations ──────────────────────────────── |unstack-limitations|
+  ╙ Limitations ──────────────────────────────── |unstack_limitations|
 
 ==============================================================================
-INTRODUCTION                                     *unstack-intro*
+INTRODUCTION                                     *unstack_intro*
 
 Feed all or part of a stacktrace into this plugin and it will open a new tab
 with each level of the stacktrace in a new vsplit. This can be useful for
@@ -31,7 +31,7 @@ seeing more context around an exception or to quickly edit offending files.
 Unstack also supports opening lines from the quickfix list.
 
 ==============================================================================
-OPTIONS                                          *unstack-options*
+OPTIONS                                          *unstack_options*
 
 |unstack_mapkey|      shortcut to launch unstack default <leader>s
 |unstack_showsigns|   whether or not to show signs on stacktrace lines
@@ -70,7 +70,7 @@ unstack to populate the quickfix via |unstack_populate_quickfix|.
 let g:unstack_extractors=unstack#extractors#GetDefaults()
 Format: [extractor1, extractor2... ]
 
-This is the list of |unstack-extractors| that will be evaluated in order to
+This is the list of |unstack_extractors| that will be evaluated in order to
 extract a stack trace from the selected block of text. Setting this list wipes
 out any default extractors. If you want to keep the defaults but add an
 extractor to the list:
@@ -79,7 +79,7 @@ extractor to the list:
 * set g:unstack_extractors to the combined list
 
 ==============================================================================
-EXTRACTORS                                       *unstack-extractors*
+EXTRACTORS                                       *unstack_extractors*
 
 Extractors are dicts with an extract method that takes in text and returns a 
 stack trace in the form [[filea, linea], [fileb, lineb]... ] by writing your
@@ -99,7 +99,7 @@ endfunction
 
 ------------------------------------------------------------------------------
 REGEX EXTRACTORS                                 *unstack#extractors#regex*
-                                                 *unstack-regex-extractors*
+                                                 *unstack_regex_extractors*
 
 If you want to write an extractor for a format where file path and line number
 can be extracted with regular expressions, there's a built-in factory to help
@@ -135,7 +135,7 @@ let g:unstack_extractors = [unstack#extractors#Regex('\v^ *File "([^"]+)", line 
 let g:unstack_extractors = unstack#extractors#GetDefaults() + [unstack#extractors#Regex('\v^ *File "([^"]+)", line ([0-9]+).+', '\1', '\2')]
 
 ==============================================================================
-LIMITATIONS                                      *unstack-limitations*
+LIMITATIONS                                      *unstack_limitations*
 
 1. Unstack only recognizes stack trace styles listed in README.markdown,
    but this can be extended via the |unstack_extractors| setting.
