@@ -12,22 +12,30 @@ augroup end
 "unstack#Unstack(selection_type) called by hotkeys {{{
 function! unstack#Unstack(selection_type)
   let stack = unstack#ExtractFiles(a:selection_type)
-  if g:unstack_populate_quickfix
-    call unstack#PopulateQuickfix(stack)
-  endif
-  if g:unstack_open_tab
-    call unstack#OpenStackTrace(stack)
+  if len(stack) > 0
+    if g:unstack_populate_quickfix
+      call unstack#PopulateQuickfix(stack)
+    endif
+    if g:unstack_open_tab
+      call unstack#OpenStackTrace(stack)
+    endif
+  else
+    echoerr "No stack trace found!"
   endif
 endfunction
 "}}}
 "unstack#UnstackFromText(text) call unstack with text as input {{{
 function! unstack#UnstackFromText(text)
   let stack = unstack#ExtractFilesFromText(a:text)
-  if g:unstack_populate_quickfix
-    call unstack#PopulateQuickfix(stack)
-  endif
-  if g:unstack_open_tab
-    call unstack#OpenStackTrace(stack)
+  if len(stack) > 0
+    if g:unstack_populate_quickfix
+      call unstack#PopulateQuickfix(stack)
+    endif
+    if g:unstack_open_tab
+      call unstack#OpenStackTrace(stack)
+    endif
+  else
+    echoerr "No stack trace found!"
   endif
 endfunction
 "}}}
@@ -105,6 +113,7 @@ function! unstack#ExtractFilesFromText(text)
       return stack
     endif
   endfor
+  return []
 endfunction
 "}}}
 "Opening:
