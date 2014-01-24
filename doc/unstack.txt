@@ -30,6 +30,14 @@ seeing more context around an exception or to quickly edit offending files.
 
 Unstack also supports opening lines from the quickfix list.
 
+The basic usage is to highlight a block of text and type <leader>s. Not sure
+what <leader> is? It defaults to \ but to be sure, run `:echo mapleader`.
+
+When you launch unstack, it opens the files from the stack trace in a new tab.
+When you're done with the stack trace, run `:tabclose` to close the tab and 
+return vim to the state it was in before you ran Unstack. If you are 
+unfamiliar with tabs, read `:help |tabpage|` to learn more.
+
 ==============================================================================
 OPTIONS                                          *unstack_options*
 
