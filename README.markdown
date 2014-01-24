@@ -11,13 +11,15 @@ To this!
 
 <img src="http://i.imgur.com/Q31wohX.png" width="800"/>
 
-Version 0.3.5
+Version 0.4.0
 
 No backwards compatability is guaranteed at this time.
 
 Usage
 -----
-Visually select part/all of a stacktrace and hit `<leader>s`. If you want to use a different map key, put `let g:unstack_mapkey=<F10>` (replacing <F10> with the key of your choice.)
+Visually select part/all of a stacktrace and hit `<leader>s`. If you want to use a different map key, put `let g:unstack_mapkey=<F10>` (replacing `<F10>` with the key of your choice.)
+
+You can also copy a stack trace to your system clipboard (from any program) and run `:UnstackFromClipboard`.
 
 If this results in too many vsplits crowding the screen, consider taking a look at the [accordion](https://github.com/mattboehm/vim-accordion) plugin (shameless plug).
 

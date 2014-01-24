@@ -20,6 +20,17 @@ function! unstack#Unstack(selection_type)
   endif
 endfunction
 "}}}
+"unstack#UnstackFromText(text) call unstack with text as input {{{
+function! unstack#UnstackFromText(text)
+  let stack = unstack#ExtractFilesFromText(a:text)
+  if g:unstack_populate_quickfix
+    call unstack#PopulateQuickfix(stack)
+  endif
+  if g:unstack_open_tab
+    call unstack#OpenStackTrace(stack)
+  endif
+endfunction
+"}}}
 "Extraction:
 "unstack#ExtractFiles(selection_type) extract files and line numbers {{{
 function! unstack#ExtractFiles(selection_type)
