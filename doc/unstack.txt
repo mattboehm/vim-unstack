@@ -20,7 +20,7 @@ CONTENTS                                         *unstack_contents*
   ║  ├ open_tab................................. |unstack_open_tab|
   ║  └ extractors............................... |unstack_extractors|
   ║                                                                           
-  ╠ Extractors ───────────────────────────────── |unstack_extractors|
+  ╠ Extractors ───────────────────────────────── |unstack_extraction_engines|
   ║  └ Regex Extractors......................... |unstack_regex_extractors|
   ║                                                                           
   ╙ Limitations ──────────────────────────────── |unstack_limitations|
@@ -105,7 +105,7 @@ unstack to populate the quickfix via |unstack_populate_quickfix|.
 let g:unstack_extractors=unstack#extractors#GetDefaults()
 Format: [extractor1, extractor2... ]
 
-This is the list of |unstack_extractors| that will be evaluated in order to
+This is the list of |unstack_extraction_engines| that will be evaluated in order to
 extract a stack trace from the selected block of text. Setting this list wipes
 out any default extractors. If you want to keep the defaults but add an
 extractor to the list:
@@ -114,7 +114,7 @@ extractor to the list:
 * set g:unstack_extractors to the combined list
 
 ==============================================================================
-EXTRACTORS                                       *unstack_extractors*
+EXTRACTORS                                       *unstack_extraction_engines*
 
 Extractors are dicts with an extract method that takes in text and returns a 
 stack trace in the form [[filea, linea], [fileb, lineb]... ] by writing your
