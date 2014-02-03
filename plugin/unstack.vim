@@ -35,7 +35,7 @@ if !exists('g:unstack_showsigns')
   let g:unstack_showsigns = 1
 endif "}}}
 "Commands {{{
-command! -nargs=1 UnstackFromText call unstack#UnstackFromText(<f-args>)
+command! -nargs=1 UnstackFromText call unstack#UnstackFromText(eval(<f-args>))
 command! UnstackFromClipboard call unstack#UnstackFromText(@+)
 "}}}
 
