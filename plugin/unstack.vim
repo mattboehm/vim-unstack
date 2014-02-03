@@ -37,6 +37,7 @@ endif "}}}
 "Commands {{{
 command! -nargs=1 UnstackFromText call unstack#UnstackFromText(eval(<f-args>))
 command! UnstackFromClipboard call unstack#UnstackFromText(@+)
+command! UnstackFromSelection call unstack#UnstackFromText(@*)
 "}}}
 
 " vim: et sw=2 sts=2 foldmethod=marker foldmarker={{{,}}}

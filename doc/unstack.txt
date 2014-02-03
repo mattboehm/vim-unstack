@@ -11,6 +11,7 @@ CONTENTS                                         *unstack_contents*
   ╠ Commands ─────────────────────────────────── |unstack_commands|
   ║  ├ UnstackFromText.......................... |:UnstackFromText|
   ║  ├ UnstackFromClipboard..................... |:UnstackFromClipboard|
+  ║  ├ UnstackFromSelection..................... |:UnstackFromSelection|
   ║                                                                           
   ╠ Options ──────────────────────────────────── |unstack_options|
   ║  ├ mapkey................................... |unstack_mapkey|
@@ -62,8 +63,10 @@ COMMANDS                                         *unstack_commands*
 
 *:UnstackFromClipboard*    Call unstack with the contents of the clipboard
                          Note: this is identical to `:UnstackFromText @+`
-|unstack_mapkey|      shortcut to launch unstack default <leader>s
-|unstack_showsigns|   whether or not to show signs on stacktrace lines
+
+*:UnstackFromSelection*    Call unstack with the contents of the X selection
+                         clipboard
+                         Note: this is identical to `:UnstackFromText @*`
 
 ==============================================================================
 OPTIONS                                          *unstack_options*
