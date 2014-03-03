@@ -26,6 +26,7 @@ endfunction
 "}}}
 "unstack#UnstackFromText(text) call unstack with text as input {{{
 function! unstack#UnstackFromText(text)
+  echom a:text
   let stack = unstack#ExtractFilesFromText(a:text)
   if len(stack) > 0
     if g:unstack_populate_quickfix
@@ -145,9 +146,7 @@ function! unstack#OpenStackTrace(files)
   endif
   for [filepath, lineno] in a:files
     execute "edit" filepath
-    "move line with error to top then show 5 lines of context above
-    setl scrolloff=5
-    execute "normal!" lineno."z+"
+    execute "normal!" lineno."z."
     if (g:unstack_showsigns)
       execute "sign place" signId "line=".lineno "name=errline" "buffer=".bufnr('%')
       "store the signs so they can be removed later
