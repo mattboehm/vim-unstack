@@ -17,6 +17,7 @@ CONTENTS                                         *unstack_contents*
   ║  ├ mapkey................................... |unstack_mapkey|
   ║  ├ showsigns................................ |unstack_showsigns|
   ║  ├ layout................................... |unstack_layout|
+  ║  ├ vertical_alignment....................... |unstack_vertical_alignment|
   ║  ├ scrolloff................................ |unstack_scrolloff|
   ║  ├ populate_quickfix........................ |unstack_populate_quickfix|
   ║  ├ open_tab................................. |unstack_open_tab|
@@ -93,6 +94,14 @@ let g:unstack_layout="landscape"                 *unstack_layout*
 Determines how to layout windows when opening a stack trace
 * "landscape": open vsplits
 * "portrait": open hsplits
+------------------------------------------------------------------------------
+let g:unstack_vertical_alignment="middle"        *unstack_vertical_alignment*
+
+Options: "top", "middle", "bottom"
+
+Where the line from the stack trace should be on the screen.
+If the line is too close to the beginning or end of the file, its position may
+differ slightly.
 ------------------------------------------------------------------------------
 let g:unstack_scrolloff=0                        *unstack_scrolloff*
 

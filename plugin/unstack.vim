@@ -35,6 +35,11 @@ if (!exists('g:unstack_scrolloff'))
   let g:unstack_scrolloff = 0
 endif
 
+"where to put the line from the stack trace
+if (!exists('g:unstack_vertical_alignment'))
+  let g:unstack_vertical_alignment = "middle"
+endif
+
 "Whether or not to show signs on error lines (highlights them red)
 if !exists('g:unstack_showsigns')
   let g:unstack_showsigns = 1

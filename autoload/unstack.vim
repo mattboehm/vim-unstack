@@ -150,7 +150,7 @@ function! unstack#OpenStackTrace(files)
   endif
   for [filepath, lineno] in a:files
     execute "edit" filepath
-    execute "normal!" lineno."z."
+    call unstack#MoveToLine(lineno)
     if (g:unstack_showsigns)
       execute "sign place" signId "line=".lineno "name=errline" "buffer=".bufnr('%')
       "store the signs so they can be removed later
@@ -210,6 +210,15 @@ function! unstack#GetLayout()
   else
     throw "g:unstack_layout must be portrait or landscape"
   endif
+endfunction
+"}}}
+"unstack#MoveToLine move cursor to the line and put it in the right part of the screen {{{
+let s:movement_cmd = {}
+let s:movement_cmd["top"] = "z+"
+let s:movement_cmd["middle"] = "z."
+let s:movement_cmd["bottom"] = "z-"
+function! unstack#MoveToLine(lineno)
+    execute "normal!" a:lineno . s:movement_cmd[g:unstack_vertical_alignment]
 endfunction
 "}}}
 "unstack#SplitWindow() split window horizontally/vertically based on layout{{{

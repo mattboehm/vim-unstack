@@ -11,7 +11,7 @@ To this!
 
 <img src="http://i.imgur.com/Q31wohX.png" width="800"/>
 
-Version 0.4.3
+Version 0.5.0
 
 No backwards compatability is guaranteed at this time.
 
@@ -32,6 +32,14 @@ Portrait Layout
 If you want the levels of the stack to open in hsplits (top to bottom instead of left to right), add the following to your .vimrc:
 
     let g:unstack_layout = "portrait"
+
+Line Positioning
+----------------
+By default, the line will be centered on the screen. Alternatively, you can tell Unstack to move the line to the top or bottom of the screen by adding `let g:unstack_vertical_alignment = "top"' (or `"bottom"`) to your vimrc.
+
+This will respect your `scrolloff` setting. If you wish unstack to have a different amount of padding than your scrolloff, you can use `let g:unstack_scrolloff = 5`. Combined with changing the alignment to top, this would put the highlighted line 5 lines from the top of the file.
+
+Note that because vim doesn't let the first line of the file go below the top of the window, if the highlighted line is close to the start of the file, a vertical alignment of middle or bottom will not move the line all the way to the middle/bottom of the window.
 
 Supported Languages
 -------------------
