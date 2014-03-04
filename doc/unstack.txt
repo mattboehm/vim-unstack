@@ -17,6 +17,7 @@ CONTENTS                                         *unstack_contents*
   ║  ├ mapkey................................... |unstack_mapkey|
   ║  ├ showsigns................................ |unstack_showsigns|
   ║  ├ layout................................... |unstack_layout|
+  ║  ├ scrolloff................................ |unstack_scrolloff|
   ║  ├ populate_quickfix........................ |unstack_populate_quickfix|
   ║  ├ open_tab................................. |unstack_open_tab|
   ║  └ extractors............................... |unstack_extractors|
@@ -92,6 +93,14 @@ let g:unstack_layout="landscape"                 *unstack_layout*
 Determines how to layout windows when opening a stack trace
 * "landscape": open vsplits
 * "portrait": open hsplits
+------------------------------------------------------------------------------
+let g:unstack_scrolloff=0                        *unstack_scrolloff*
+
+The value for 'scrolloff' while unstack is opening files. This determines how
+many lines above the highlighted line are shown. The benefit of scrolloff is
+that it provides more context above the line being called, but the main issue
+is that it can cause highlighted lines to be at differing heights if the lines
+are near the top of the file.
 ------------------------------------------------------------------------------
 let g:unstack_populate_quickfix=0                *unstack_populate_quickfix*
 

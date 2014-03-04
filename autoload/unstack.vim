@@ -144,6 +144,10 @@ function! unstack#OpenStackTrace(files)
     let t:unstack_tabId = signId
     let s:unstack_signs[t:unstack_tabId] = []
   endif
+  if g:unstack_scrolloff
+    let old_scrolloff = &scrolloff
+    let &scrolloff = g:unstack_scrolloff
+  endif
   for [filepath, lineno] in a:files
     execute "edit" filepath
     execute "normal!" lineno."z."
@@ -160,6 +164,9 @@ function! unstack#OpenStackTrace(files)
   quit
   if (!lazyredrawSet)
     set nolazyredraw
+  endif
+  if g:unstack_scrolloff
+    let &scrolloff = old_scrolloff
   endif
 endfunction
 "}}}

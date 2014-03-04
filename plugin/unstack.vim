@@ -30,6 +30,11 @@ if (!exists('g:unstack_layout'))
   let g:unstack_layout = "landscape"
 endif
 
+"'scrolloff' value while files are opened
+if (!exists('g:unstack_scrolloff'))
+  let g:unstack_scrolloff = 0
+endif
+
 "Whether or not to show signs on error lines (highlights them red)
 if !exists('g:unstack_showsigns')
   let g:unstack_showsigns = 1
