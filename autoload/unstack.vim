@@ -26,7 +26,6 @@ endfunction
 "}}}
 "unstack#UnstackFromText(text) call unstack with text as input {{{
 function! unstack#UnstackFromText(text)
-  echom a:text
   let stack = unstack#ExtractFilesFromText(a:text)
   if len(stack) > 0
     if g:unstack_populate_quickfix
