@@ -52,6 +52,7 @@ Currently the following stack traces are supported:
 * Go
 * Node.js
 * Erlang (R15+)
+* Valgrind
 
 Is there another language you'd like supported? Open an issue with some sample stack traces or read on to learn how to add custom languages (pull requests welcome).
 

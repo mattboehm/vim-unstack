@@ -41,6 +41,8 @@ function! unstack#extractors#GetDefaults()
   call add(extractors, unstack#extractors#Regex('\v^ +at .+\((.+):(\d+):\d+\)$', '\1', '\2'))
   " Erlang R15+
   call add(extractors, unstack#extractors#Regex('\v^.+\[\{file,"([^"]+)"\},\{line,([0-9]+)\}\]\}.*$', '\1', '\2'))
+  " Valgrind
+  call add(extractors, unstack#extractors#Regex('\v^\=\=\d+\=\=[ \t]*%(at|by).*\((.+):(\d+)\)$', '\1', '\2', 1))
   return extractors
 endfunction
 
