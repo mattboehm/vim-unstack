@@ -148,15 +148,17 @@ function! unstack#OpenStackTrace(files)
     let &scrolloff = g:unstack_scrolloff
   endif
   for [filepath, lineno] in a:files
-    execute "edit" filepath
-    call unstack#MoveToLine(lineno)
-    if (g:unstack_showsigns)
-      execute "sign place" signId "line=".lineno "name=errline" "buffer=".bufnr('%')
-      "store the signs so they can be removed later
-      call add(s:unstack_signs[t:unstack_tabId], signId)
-      let signId += 1
+    if filereadable(filepath)
+      execute "edit" filepath
+      call unstack#MoveToLine(lineno)
+      if (g:unstack_showsigns)
+        execute "sign place" signId "line=".lineno "name=errline" "buffer=".bufnr('%')
+        "store the signs so they can be removed later
+        call add(s:unstack_signs[t:unstack_tabId], signId)
+        let signId += 1
+      endif
+      call unstack#SplitWindow()
     endif
-    call unstack#SplitWindow()
   endfor
   "after adding the last file, the loop splits again.
   "delete this last empty vertical split
