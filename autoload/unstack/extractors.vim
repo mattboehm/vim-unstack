@@ -1,7 +1,8 @@
 "unstack#extractors#Regex(regex, file_replacement, line_replacement) constructs {{{
 "an extractor that uses regexes 
-function! unstack#extractors#Regex(regex, file_replacement, line_replacement)
-  let extractor = {"regex": a:regex, "file_replacement": a:file_replacement, "line_replacement": a:line_replacement}
+function! unstack#extractors#Regex(regex, file_replacement, line_replacement, ...)
+  let extractor = {"regex": a:regex, "file_replacement": a:file_replacement,
+        \ "line_replacement": a:line_replacement, "reverse": (a:0 > 0) ? a:1 : 0}
   function extractor.extract(text) dict
     let stack = []
     for line in split(a:text, "\n")
@@ -12,6 +13,9 @@ function! unstack#extractors#Regex(regex, file_replacement, line_replacement)
         call add(stack, [fname, lineno])
       endif
     endfor
+    if self.reverse
+      call reverse(stack)
+    endif
     return stack
   endfunction
 

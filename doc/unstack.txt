@@ -190,6 +190,12 @@ let g:unstack_extractors = [unstack#extractors#Regex('\v^ *File "([^"]+)", line 
 "Add this extractor to the list of defaults
 let g:unstack_extractors = unstack#extractors#GetDefaults() + [unstack#extractors#Regex('\v^ *File "([^"]+)", line ([0-9]+).+', '\1', '\2')]
 
+unstack#extractors#Regex takes an optional argument that can be set to 1 to
+reverse the stack order (the default order is from top to bottom). For example
+for valgrind traces (which are in reversed order) you could use:
+
+unstack#extractors#Regex('\v^\=\=\d+\=\=[ \t]*%(at|by).*\((.+):(\d+)\)$', '\1', '\2', 1)
+
 ==============================================================================
 LIMITATIONS                                      *unstack_limitations*
 
