@@ -39,6 +39,16 @@ function! unstack#UnstackFromText(text)
   endif
 endfunction
 "}}}
+"unstack#UnstackFromTmuxPasteBuffer() use tmux paste buffer as input for unstack {{{
+function! unstack#UnstackFromTmuxPasteBuffer()
+  if executable('tmux') && $TMUX != ''
+    let text = system('tmux show-buffer')
+    call unstack#UnstackFromText(l:text)
+  else
+    echoerr "No tmux session is running!"
+  endif
+endfunction
+"}}}
 "Extraction:
 "unstack#ExtractFiles(selection_type) extract files and line numbers {{{
 function! unstack#ExtractFiles(selection_type)
