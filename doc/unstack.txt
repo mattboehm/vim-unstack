@@ -11,6 +11,7 @@ CONTENTS                                         *unstack_contents*
   ╠ Commands ─────────────────────────────────── |unstack_commands|
   ║  ├ UnstackFromText.......................... |:UnstackFromText|
   ║  ├ UnstackFromClipboard..................... |:UnstackFromClipboard|
+  ║  ├ UnstackFromTmux.......................... |:UnstackFromTmux|
   ║  ├ UnstackFromSelection..................... |:UnstackFromSelection|
   ║                                                                           
   ╠ Options ──────────────────────────────────── |unstack_options|
@@ -49,6 +50,10 @@ it to a hotkey like this:
 This allows you to copy from an external program and hit <F10> in vim to open
 the stack trace.
 
+Tmux users can call |:UnstackFromTmux| instead to load a stack trace from the
+tmux paste buffer. That is particularly useful when working on remote machines
+that don't have a running x server.
+
 When you launch unstack, it opens the files from the stack trace in a new tab.
 When you're done with the stack trace, run `:tabclose` to close the tab and 
 return vim to the state it was in before you ran Unstack. If you are 
@@ -65,6 +70,9 @@ COMMANDS                                         *unstack_commands*
 
 *:UnstackFromClipboard*    Call unstack with the contents of the clipboard
                          Note: this is identical to `:UnstackFromText @+`
+
+*:UnstackFromTmux*         Call unstack with the contents of the tmux paste
+                         buffer
 
 *:UnstackFromSelection*    Call unstack with the contents of the X selection
                          clipboard
