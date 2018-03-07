@@ -158,7 +158,7 @@ function! unstack#OpenStackTrace(files)
     let &scrolloff = g:unstack_scrolloff
   endif
   for [filepath, lineno] in a:files
-    if filereadable(filepath)
+    if filereadable(filepath) || (match(filepath, "://") > -1)
       execute "edit" filepath
       call unstack#MoveToLine(lineno)
       if (g:unstack_showsigns)
