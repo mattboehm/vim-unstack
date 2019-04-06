@@ -7,8 +7,10 @@ let g:loaded_unstack = 1
 if !exists('g:unstack_mapkey')
   let g:unstack_mapkey = '<leader>s'
 endif
-exe 'nnoremap '.g:unstack_mapkey.' :set operatorfunc=unstack#Unstack<cr>g@'
-exe 'vnoremap '.g:unstack_mapkey.' :<c-u>call unstack#Unstack(visualmode())<cr>'
+if g:unstack_mapkey !~# '\s*'
+  exe 'nnoremap '.g:unstack_mapkey.' :set operatorfunc=unstack#Unstack<cr>g@'
+  exe 'vnoremap '.g:unstack_mapkey.' :<c-u>call unstack#Unstack(visualmode())<cr>'
+endif
 
 "List of text extractors
 if (!exists('g:unstack_extractors'))

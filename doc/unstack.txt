@@ -89,7 +89,8 @@ OPTIONS                                          *unstack_options*
 let g:unstack_mapkey="<leader>s"                 *unstack_mapkey*
 
 Press this combination with a visual selection (or in normal mode followed by
-a motion) to edit 
+a motion) to edit. To not define any key mapping, assign an empty string to
+this variable.
 ------------------------------------------------------------------------------
 let g:unstack_showsigns=1                        *unstack_showsigns*
 
