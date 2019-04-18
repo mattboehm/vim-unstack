@@ -17,7 +17,7 @@ No backwards compatability is guaranteed at this time.
 
 Usage
 -----
-Visually select part/all of a stacktrace and hit `<leader>s`. If you want to use a different map key, put `let g:unstack_mapkey=<F10>` (replacing `<F10>` with the key of your choice.)
+Visually select part/all of a stacktrace and hit `<leader>s`. If you want to use a different map key, put `let g:unstack_mapkey=<F10>` (replacing `<F10>` with the key of your choice, or an empty string to disable the mapping).
 
 You can also copy a stack trace to your system clipboard (from any program) and run `:UnstackFromClipboard`.
 
