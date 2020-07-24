@@ -28,9 +28,9 @@ function! unstack#extractors#GetDefaults()
   "me cry
   let extractors = []
   "Python
-  call add(extractors, unstack#extractors#Regex('\v^ *File "([^"]+)", line ([0-9]+).+', '\1', '\2'))
+  call add(extractors, unstack#extractors#Regex('\v^ *File "([^"]+)", line ([0-9]+).?', '\1', '\2'))
   "Ruby
-  call add(extractors, unstack#extractors#Regex('\v^[ \t]*from (.+):([0-9]+):in `.+', '\1', '\2'))
+  call add(extractors, unstack#extractors#Regex('\v^[ \t]*from (.+):([0-9]+):in `.?', '\1', '\2'))
   "C#
   call add(extractors, unstack#extractors#Regex('\v^[ \t]*at .*\(.*\) in (.+):line ([0-9]+) *$', '\1', '\2'))
   "Perl
