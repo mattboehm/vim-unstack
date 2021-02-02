@@ -30,7 +30,7 @@ function! unstack#extractors#GetDefaults()
   "Python
   call add(extractors, unstack#extractors#Regex('\v^ *File "([^"]+)", line ([0-9]+).?', '\1', '\2'))
   "Pytest
-  call add(extractors, unstack#extractors#Regex('\v^([^: ]+):([0-9]+):.?', '\1', '\2'))
+  call add(extractors, unstack#extractors#Regex('\v^([^: ]+):([0-9]+):.*', '\1', '\2'))
   "Ruby
   call add(extractors, unstack#extractors#Regex('\v^[ \t]*from (.+):([0-9]+):in `.?', '\1', '\2'))
   "C#

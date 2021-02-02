@@ -180,6 +180,11 @@ For instance, in python, stack traces look like this:
 First we want to form a regex that only matches valid lines with files:
         '\v^ *File "([^"]+)", line ([0-9]+).+'
 
+Please note that this pattern should match the *whole line*, including any
+trailing characters after the file/line number. As we're using find/replace on
+the whole line, failing to match any leading/trailing characters will result
+in them being included in the file name and line number.
+
 Replacing this with the thing in the first perens (\1) yields the file path.
 you can test this by putting your cursor on the first line of the stack trace
 and running:
